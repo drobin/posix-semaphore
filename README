@@ -1,3 +1,21 @@
+~~~~~~~~~~~~
+WARNING! DO NOT USE!!
+
+This package is unfixably buggy because of an incorrect assumption made
+by the Ruby interpreter that causes crashes on (at least) Mac OS X.
+
+Mac OS X (and presumably some other Unix variants) allocate semaphore
+IDs from the same integer pool as file descriptors. Ruby, not entirely
+unreasonably, assumes that any integer in the pool of 'used' file-
+descriptor numbers can be successfully fstat(2)-ed, and does this
+occasionally on random file descriptors. But the fd numbers used by
+semaphores aren’t files, they're semaphores, so fstat(2) fails even
+though Ruby expects it to be a valid file descriptor.
+
+I'm not sure if this is a bug in Ruby or in Mac OS X. I wouldn't hold
+my breath about either of them fixing the problem.
+~~~~~~~~~~~~
+
  ___  ___  ___ _____  ___ _ ___                      _
 | _ \/ _ \/ __|_ _\ \/ (_|_) __| ___ _ __  __ _ _ __| |_  ___ _ _ ___
 |  _/ (_) \__ \| | >  < _ _\__ \/ -_) '  \/ _` | '_ \ ' \/ _ \ '_/ -_)
@@ -9,4 +27,3 @@ POSIX semaphores! In Ruby! Whatever next?
 Limitations:
 
 Currently only named semaphores are supported.
-
