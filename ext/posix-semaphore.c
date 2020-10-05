@@ -10,7 +10,7 @@ void Init_posix_semaphore_ext();
 VALUE method_sem_open(int argc, VALUE* argv, VALUE self);
 VALUE method_sem_wait(VALUE self, VALUE semid);
 VALUE method_sem_trywait(VALUE self, VALUE semid);
-VALUE method_sem_timedwait(VALUE self, VALUE semid, VALUE timeout);
+// VALUE method_sem_timedwait(VALUE self, VALUE semid, VALUE timeout);
 VALUE method_sem_post(VALUE self, VALUE semid);
 VALUE method_sem_close(VALUE self, VALUE semid);
 // VALUE method_sem_getvalue(VALUE self, VALUE semid);
@@ -21,7 +21,7 @@ void Init_posix_semaphore_ext() {
   rb_define_singleton_method(mPOSIX, "sem_open", method_sem_open, -1);
   rb_define_singleton_method(mPOSIX, "sem_wait", method_sem_wait, 1);
   rb_define_singleton_method(mPOSIX, "sem_trywait", method_sem_trywait, 1);
-  rb_define_singleton_method(mPOSIX, "sem_timedwait", method_sem_timedwait, 2);
+//   rb_define_singleton_method(mPOSIX, "sem_timedwait", method_sem_timedwait, 2);
   rb_define_singleton_method(mPOSIX, "sem_post", method_sem_post, 1);
   rb_define_singleton_method(mPOSIX, "sem_close", method_sem_close, 1);
   // rb_define_singleton_method(mPOSIX, "sem_getvalue", method_sem_getvalue, 1);
@@ -78,16 +78,16 @@ VALUE method_sem_trywait(VALUE self, VALUE semid) {
   return INT2FIX(result);
 }
 
-VALUE method_sem_timedwait(VALUE self, VALUE semid, VALUE timeout) {
-  Check_Type(semid, T_FIXNUM);
-  
-  struct timespec ts = rb_time_timespec(timeout);
-  
-  int result = sem_timedwait((sem_t*) FIX2LONG(semid), &ts);
-  if (result < 0) rb_sys_fail(0);
-  
-  return INT2FIX(result);
-}
+// VALUE method_sem_timedwait(VALUE self, VALUE semid, VALUE timeout) {
+//   Check_Type(semid, T_FIXNUM);
+//   
+//   struct timespec ts = rb_time_timespec(timeout);
+//   
+//   int result = sem_timedwait((sem_t*) FIX2LONG(semid), &ts);
+//   if (result < 0) rb_sys_fail(0);
+//   
+//   return INT2FIX(result);
+// }
 
 VALUE method_sem_post(VALUE self, VALUE semid) {
   Check_Type(semid, T_FIXNUM);
